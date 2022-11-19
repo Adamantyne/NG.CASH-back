@@ -9,6 +9,18 @@ datasource db {
 
 model User {
   id          Int           @id @default(autoincrement())
+  username    String        @unique
+  password    String
+  session     Session[]
+}
 
-  @@map("users")
+model Session {
+  id       Int       @id @default(autoincrement())
+  userId   Int
+  user     User      @relation(fields: [userId], references: [id])
+  token    String
+  loginAt  DateTime  @default(now())
+  logoutAt DateTime?
+
+  @@map("sessions")
 }
