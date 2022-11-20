@@ -1,5 +1,5 @@
-import { User } from "@prisma/client";
 import { Request, Response } from "express";
+import { User } from "@prisma/client";
 
 import { SignUpData } from "../schemas/authSchemas.js";
 import authServices from "../services/authServices.js";
