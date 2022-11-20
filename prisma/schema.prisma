@@ -8,10 +8,15 @@ datasource db {
 }
 
 model User {
-  id          Int           @id @default(autoincrement())
-  username    String        @unique
-  password    String
-  session     Session[]
+  id        Int       @id @default(autoincrement())
+  username  String    @unique
+  password  String
+  accountId Int
+  account   Account   @relation(fields: [accountId], references: [id])
+  session   Session[]
+
+  @@unique([id, accountId])
+  @@map("Users")
 }
 
 model Session {
@@ -22,5 +27,27 @@ model Session {
   loginAt  DateTime  @default(now())
   logoutAt DateTime?
 
-  @@map("sessions")
+  @@map("Sessions")
+}
+
+model Account {
+  id                  Int           @id @default(autoincrement())
+  balance             Int
+  users               User[]
+  TransactionDebited  Transaction[] @relation("debited")
+  TransactionCredited Transaction[] @relation("credited")
+
+  @@map("Accounts")
+}
+
+model Transaction {
+  id                Int      @id @default(autoincrement())
+  value             Int
+  createdAt         DateTime @default(now())
+  debitedAccountId  Int
+  creditedAccountId Int
+  debited           Account  @relation("debited", fields: [debitedAccountId], references: [id])
+  credited          Account  @relation("credited", fields: [creditedAccountId], references: [id])
+
+  @@map("Transactions")
 }

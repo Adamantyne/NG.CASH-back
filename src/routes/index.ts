@@ -1,9 +1,11 @@
 import { Router } from "express";
 
 import authRouter from "./authRouter.js";
+import accountRouter from "./accountRouter.js";
 
 const routers = Router();
 
 routers.use(authRouter);
+routers.use(accountRouter);
 
 export default routers;
