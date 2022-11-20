@@ -14,9 +14,26 @@ async function createUser(inputData: SignInData) {
   return await db.user.create({ data: inputData });
 }
 
+async function FindAccountIdByUsername(username: string) {
+  return await db.user.findUnique({
+    where: {
+      username,
+    },
+    select: {
+      accountId: true,
+      account: {
+        select: {
+          balance: true,
+        },
+      },
+    },
+  });
+}
+
 const userRepository = {
   findByUsername,
   createUser,
-  findByUsernameAndId
+  findByUsernameAndId,
+  FindAccountIdByUsername,
 };
 export default userRepository;

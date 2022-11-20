@@ -5,7 +5,7 @@ import userRepository from "../repositories/userRepository.js";
 import { createToken } from "../utils/suportFunctions.js";
 import { SignInData } from "../schemas/authSchemas.js";
 import sessionRepository from "../repositories/sessionRepository.js";
-import accountRepository from "../repositories/AccountRepository.js";
+import accountRepository from "../repositories/accountRepository.js";
 
 async function createUser({ password, username }: SignInData) {
   const sault = 10;

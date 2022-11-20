@@ -1,4 +1,4 @@
-import accountRepository from "../repositories/AccountRepository.js";
+import accountRepository from "../repositories/accountRepository.js";
 
 async function getBalance(userId:number) {
     const balance = await accountRepository.getAccountById(userId);
