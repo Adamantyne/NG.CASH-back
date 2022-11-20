@@ -10,13 +10,13 @@ async function findByUsernameAndId(username: string, id: number) {
   return await db.user.findFirst({ where: { username, id } });
 }
 
-async function insertUser(inputData: SignInData) {
+async function createUser(inputData: SignInData) {
   return await db.user.create({ data: inputData });
 }
 
 const userRepository = {
   findByUsername,
-  insertUser,
+  createUser,
   findByUsernameAndId
 };
 export default userRepository;

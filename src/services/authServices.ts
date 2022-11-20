@@ -1,21 +1,22 @@
 import bcrypt from "bcrypt";
-import dayjs from "dayjs";
 import { User } from "@prisma/client";
 
 import userRepository from "../repositories/userRepository.js";
 import { createToken } from "../utils/suportFunctions.js";
 import { SignInData } from "../schemas/authSchemas.js";
 import sessionRepository from "../repositories/sessionRepository.js";
+import accountRepository from "../repositories/AccountRepository.js";
 
 async function createUser({ password, username }: SignInData) {
   const sault = 10;
   const encryptedPassword = bcrypt.hashSync(password, sault);
   const insertUserData = { username, password: encryptedPassword };
-  await userRepository.insertUser(insertUserData);
+  const { id: accountId } = await accountRepository.createAccount(10000);
+  await userRepository.createUser({ ...insertUserData, accountId });
 }
 
 async function createSession({ username, id }: User) {
-  const token = createToken({ username, id});
+  const token = createToken({ username, id });
   await invalidatingLastSession(id);
   await sessionRepository.createSession({ userId: id, token });
   return token;
@@ -35,5 +36,10 @@ async function getUserInfos(username: string) {
   return userInfos;
 }
 
-const authServices = { createUser, createSession, invalidatingLastSession, getUserInfos};
+const authServices = {
+  createUser,
+  createSession,
+  invalidatingLastSession,
+  getUserInfos,
+};
 export default authServices;
