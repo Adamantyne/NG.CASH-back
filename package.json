@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "start": "npm run prisma:prod && node dist/src/index.js",
-    "dev": "nodemon src/index.ts",
+    "start": "npm run prisma:prod && npm run build && node dist/src/index.js",
+    "dev": "dotenv -e .env.local nodemon src/index.ts",
     "test": "npm run prisma:test && npm run test-options dotenv -e .env.test jest -- -i -- app.test.ts",
     "test:local": "npm run prisma:test-local && npm run test-options dotenv -e .env.test.local jest -- -i -- app.test.ts",
     "test:unit": "npm run test-options jest -- -i --coverage --collectCoverageFrom=src/services/ -- unit.test.ts",
