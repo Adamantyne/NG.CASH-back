@@ -16,7 +16,7 @@ jobs:
           envkey_POSTGRES_DB: ${{secrets.DB_NAME}}
           envkey_DATABASE_URL: ${{secrets.DB_URL}}
           envkey_JWT_SECRET: ${{secrets.JWT_SECRET}}
-          envkey_DATABASE_URL: ${{secrets.CRYPTER_CODE}}
+          envkey_CRYPTER_CODE: ${{secrets.CRYPTER_CODE}}
           file_name: .env.test
       - name: Run tests
         run: npm run test:docker
