@@ -10,9 +10,32 @@ async function getTransactionsById(userId: number) {
   });
 }
 
+async function getDebitedTransactions(userId: number) {
+  return await db.transaction.findMany({
+    where: {
+      debitedAccountId: userId,
+    },
+    orderBy: { createdAt: "desc" },
+  });
+}
+
+async function getCreditedTransactions(userId: number) {
+  return await db.transaction.findMany({
+    where: {
+      creditedAccountId: userId,
+    },
+    orderBy: { createdAt: "desc" },
+  });
+}
+
 async function postTransaction(transactionData: TransactionType) {
   return await db.transaction.create({ data: transactionData });
 }
 
-const transactionsRepository = { getTransactionsById, postTransaction };
+const transactionsRepository = {
+  getTransactionsById,
+  postTransaction,
+  getDebitedTransactions,
+  getCreditedTransactions,
+};
 export default transactionsRepository;

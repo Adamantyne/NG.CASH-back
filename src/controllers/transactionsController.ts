@@ -16,5 +16,17 @@ export async function getTransactions(req: Request, res: Response) {
 export async function postTransaction(req: Request, res: Response) {
   const transactionData: TransactionType = res.locals.transactionData;
   await transactionsService.postTransiction(transactionData);
-  res.status(200).send("transactions");
+  res.status(201).send("transactions");
+}
+
+export async function getTransactionsByDate(req: Request, res: Response) {
+  const { userId }: { userId: number } = res.locals.userId;
+  const { filter } = req.query;
+  const { date } = req.params;
+  const transactions = await transactionsService.getTransactionsByDate(
+    userId,
+    filter,
+    date
+  );
+  res.status(200).send(transactions);
 }

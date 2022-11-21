@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { User } from "@prisma/client";
 
-import { SignUpData, SignInData } from "../schemas/authSchemas.js";
+import { SignInInput, SignUpInput } from "../schemas/authSchemas.js";
 import {
   throwErr,
   validateUser,
@@ -15,7 +15,7 @@ export async function signUpMiddleware(
   res: Response,
   next: NextFunction
 ) {
-  const { username, password }: SignUpData = req.body;
+  const { username, password }: SignUpInput = req.body;
   const alreadyExist = await userRepository.findByUsername(username);
   if (alreadyExist) {
     throwErr("conflict", "username already registered");
@@ -30,7 +30,7 @@ export async function signInMiddleware(
   res: Response,
   next: NextFunction
 ) {
-  const inputData: SignInData = req.body;
+  const inputData: SignInInput = req.body;
 
   const user: User = await validateUser(inputData.username);
 
