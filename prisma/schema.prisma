@@ -16,7 +16,7 @@ model User {
   session   Session[]
 
   @@unique([id, accountId])
-  @@map("Users")
+  @@map("users")
 }
 
 model Session {
@@ -27,7 +27,7 @@ model Session {
   loginAt  DateTime  @default(now())
   logoutAt DateTime?
 
-  @@map("Sessions")
+  @@map("sessions")
 }
 
 model Account {
@@ -37,7 +37,7 @@ model Account {
   TransactionDebited  Transaction[] @relation("debited")
   TransactionCredited Transaction[] @relation("credited")
 
-  @@map("Accounts")
+  @@map("accounts")
 }
 
 model Transaction {
@@ -49,5 +49,5 @@ model Transaction {
   debited           Account  @relation("debited", fields: [debitedAccountId], references: [id])
   credited          Account  @relation("credited", fields: [creditedAccountId], references: [id])
 
-  @@map("Transactions")
+  @@map("transactions")
 }
