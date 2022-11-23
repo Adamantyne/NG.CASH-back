@@ -13,7 +13,10 @@ export async function postTransactionMiddleware(
 ) {
   const { userId }: { userId: number } = res.locals.userId;
   const transactionData: TransactionInput = req.body;
-  const { value } = transactionData;
+  let { value } = transactionData;
+  if(typeof(value)!=="number"){
+    value===parseFloat(value);
+  }
   
   const creditedAccountId = await transactionValidate(transactionData, userId);
 
