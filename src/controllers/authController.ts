@@ -20,7 +20,7 @@ export async function signUp(req:Request,res:Response) {
 export async function signOut(req:Request,res:Response) {
     const {userId}:{userId:number} = res.locals.userId;
     await authServices.invalidatingLastSession(userId);
-    res.sendStatus(201);
+    res.sendStatus(202);
 }
 
 export async function checkToken(req:Request,res:Response) {
